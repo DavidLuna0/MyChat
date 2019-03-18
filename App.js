@@ -13,11 +13,13 @@ import Conversas from './src/Conversas';
 import SignUp from './src/SignUp';
 import SignIn from './src/SignIn';
 
+console.disableYellowBox = true;
+
 let store = createStore(Reducers, applyMiddleware(ReduxThunk));
 
 const Navegador = createStackNavigator({
-  Preload:{
-    screen:Preload
+  Preload: {
+    screen: Preload
   },
   Home: {
     screen: Home

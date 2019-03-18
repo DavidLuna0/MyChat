@@ -1,5 +1,16 @@
 import firebase from '../FirebaseConnection';
 
+export const signOut = () => {
+	firebase.auth().signOut();
+
+	return {
+		type: 'changeStatus',
+		payload: {
+			status: 2
+		}
+	};
+};
+
 export const checkLogin = () => {
 
 	return (dispatch) => {
