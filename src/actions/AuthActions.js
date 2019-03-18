@@ -4,26 +4,24 @@ export const checkLogin = () => {
 
 	return (dispatch) => {
 
-		let user = firebase.auth().currentUser;
-
-		if (user) {
-			dispatch({
-				type: 'changeStatus',
-				payload: {
-					status: 1
-				}
-			});
-		} else {
-			dispatch({
-				type: 'changeStatus',
-				payload: {
-					status: 2
-				}
-			});
-		}
-
+		firebase.auth().onAuthStateChanged((user) => {
+			if (user) {
+				dispatch({
+					type: 'changeUid',
+					payload: {
+						uid: user.uid
+					}
+				});
+			} else {
+				dispatch({
+					type: 'changeStatus',
+					payload: {
+						status: 2
+					}
+				});
+			}
+		})		
 	}
-
 };
 
 export const signUp = (name, email, password) => {
@@ -73,7 +71,7 @@ export const signIn = (email, password) => {
 						uid: uid
 					}
 				});
-				
+
 			})
 			.catch((error) => {
 				switch (error.code) {

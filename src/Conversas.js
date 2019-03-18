@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
-import { checkLogin } from './actions/AuthActions';
 
 export class Conversas extends Component {
 
 	static navigationOptions = {
-		title:'',
-		header:null
+		title: '',
+		header: null
 	}
 
 	constructor(props) {
@@ -18,7 +17,7 @@ export class Conversas extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
-				<Text>Pagina Conversas{this.props.status}</Text>
+				<Text>Pagina Conversas{this.props.status}   -   {this.props.uid}</Text>
 			</View>
 		);
 	}
@@ -26,18 +25,19 @@ export class Conversas extends Component {
 }
 
 const styles = StyleSheet.create({
-	container:{
-		margin:10
+	container: {
+		margin: 10
 	}
 });
 
 const mapStateToProps = (state) => {
 	return {
-		status:state.auth.status
+		status: state.auth.status,
+		uid: state.auth.uid
 	};
 };
 
-const ConversasConnect = connect(mapStateToProps, { checkLogin })(Conversas);
+const ConversasConnect = connect(mapStateToProps, {})(Conversas);
 export default ConversasConnect
 
 
