@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
 import { connect } from 'react-redux';
-import { getContactList } from './actions/ChatActions';
+import { getContactList } from '../actions/ChatActions';
 
 export class ContatoList extends Component {
 

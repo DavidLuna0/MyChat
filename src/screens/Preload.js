@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { NavigationActions, StackActions } from 'react-navigation';
 import { connect } from 'react-redux';
-import { checkLogin } from './actions/AuthActions';
+import { checkLogin } from '../actions/AuthActions';
 
 export class Preload extends Component {
 

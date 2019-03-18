@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Button, TextInput, Keyboard } from 'react-native';
 import { connect } from 'react-redux';
-import { checkLogin, changeEmail, changePassword, signIn } from './actions/AuthActions';
+import { checkLogin, changeEmail, changePassword, changeName, signUp } from '../actions/AuthActions';
 
-export class SignIn extends Component {
+export class SignUp extends Component {
 
     static navigationOptions = {
-        title: 'Login'
+        title: 'Cadastrar'
     }
 
     constructor(props) {
@@ -25,6 +25,8 @@ export class SignIn extends Component {
     render() {
         return (
             <View style={styles.container}>
+                <Text>Digite seu Nome</Text>
+                <TextInput style={styles.input} value={this.props.name} onChangeText={this.props.changeName}/>
 
                 <Text>Digite seu e-mail</Text>
                 <TextInput style={styles.input} value={this.props.email} onChangeText={this.props.changeEmail}/>
@@ -32,7 +34,7 @@ export class SignIn extends Component {
                 <Text>Digite sua senha</Text>
                 <TextInput secureTextEntry={true} style={styles.input} value={this.props.password} onChangeText={this.props.changePassword}/>
 
-                <Button title= "Entrar" onPress={() => {this.props.signIn(this.props.email, this.props.password)}} /> 
+                <Button title= "Cadastrar" onPress={() => {this.props.signUp(this.props.name, this.props.email, this.props.password)}} /> 
             </View>
         );
     }
@@ -57,7 +59,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
     return {
-        uid: state.auth.uid,
+        name:state.auth.name,
         email: state.auth.email,
         password: state.auth.password,
         status: state.auth.status
@@ -65,8 +67,8 @@ const mapStateToProps = (state) => {
     };
 };
 
-const SignIpConnect = connect(mapStateToProps, { checkLogin, changeEmail, changePassword, signIn })(SignIn);
-export default SignIpConnect;
+const SignUpConnect = connect(mapStateToProps, { checkLogin, changeName, changeEmail, changePassword, signUp })(SignUp);
+export default SignUpConnect;
 
 
 
