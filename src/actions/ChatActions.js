@@ -72,17 +72,15 @@ export const createChat = (userUid1, userUid2) => {
             firebase.database().ref('users').child(userUid2).child('chats').child(chatId).set({
                 id: chatId,
                 title: snapshot.val().name
+            }).then(() => {
+                dispatch({
+                    type: 'setActiveChat',
+                    payload: {
+                        chatId: chatId
+                    }
+                })
             });
         });
-
-
-        dispatch({
-            type: 'setActiveChat',
-            payload: {
-                chatId: chatId,
-                title: 'Titulo do chat'
-            }
-        })
     }
 }
 
