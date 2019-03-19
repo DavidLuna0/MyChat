@@ -21,13 +21,15 @@ export class Config extends Component {
     }
     
     sair() {
-        this.props.signOut();
-        this.props.navigation.dispatch(StackActions.reset({
+		this.props.signOut();
+		
+		window.globalNavigator.navigate('Home')
+        /* this.props.navigation.dispatch(StackActions.reset({
             index: 0,
             actions: [
                 NavigationActions.navigate({routeName: 'Home'})
             ]
-        }));
+        })); */
         
     };
 

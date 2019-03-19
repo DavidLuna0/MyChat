@@ -8,8 +8,7 @@ import ConversasItem from '../components/ConversasList/ConversasItem';
 export class ConversasList extends Component {
 
 	static navigationOptions = {
-		title: '',
-		header: null,
+		title: 'Conversas',
 		tabBarLabel: 'Conversas'
 	}
 
@@ -23,7 +22,7 @@ export class ConversasList extends Component {
 
 	componentDidUpdate() {
 		if(this.props.activeChat != '' ) {
-			this.props.navigation.navigate('ConversaInterna');
+			this.props.navigation.navigate('ConversaInterna', {title: this.props.activeChatTitle});
 		}
 	}
 
@@ -56,6 +55,7 @@ const mapStateToProps = (state) => {
 		status: state.auth.status,
 		uid: state.auth.uid,
 		activeChat: state.chat.activeChat,
+		activeChatTitle: state.chat.activeChatTitle,
 		chats: state.chat.chats
 	};
 };
