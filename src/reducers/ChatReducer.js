@@ -14,6 +14,10 @@ const ChatReducer = (state = initialState, action) => {
         return { ...state, activeChat:action.payload.chatId}
     }
 
+    if(action.type == 'setChatList') {
+        return { ...state, chats: action.payload.chats}
+    }
+
 	return state;
 
 };

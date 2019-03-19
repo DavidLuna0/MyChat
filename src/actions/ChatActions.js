@@ -1,5 +1,28 @@
 import firebase from '../FirebaseConnection/';
 
+export const getChatList = (userUid) => {
+    return (dispatch) => {
+        firebase.database().ref('users').child(userUid).child('chats').on('value', (snapshot) => {
+            let chats = [];
+            snapshot.forEach((childItem) => {
+                chats.push({
+                    key: childItem.key
+                })
+            });
+
+            dispatch({
+                type: 'setChatList',
+                payload: {
+                    chats: chats
+                }
+            })
+
+        });
+
+    }
+}
+
+
 export const getContactList = (userUid) => {
     return (dispatch) => {
         firebase.database().ref('users').orderByChild('name').once('value').then((snapshot) => {
@@ -24,23 +47,23 @@ export const getContactList = (userUid) => {
 }
 
 export const createChat = (userUid1, userUid2) => {
-    return(dispatch) => {
+    return (dispatch) => {
 
         //Criando o proprio CHAT
         let newChat = firebase.database().ref('chats').push();
         newChat.child('members').child(userUid1).set({
-            id:userUid1
+            id: userUid1
         });
         newChat.child('members').child(userUid2).set({
-            id:userUid2
+            id: userUid2
         });
 
         let chatId = newChat.key;
         firebase.database().ref('users').child(userUid1).child('chats').child(chatId).set({
-            id:chatId
+            id: chatId
         })
         firebase.database().ref('users').child(userUid2).child('chats').child(chatId).set({
-            id:chatId
+            id: chatId
         })
 
         dispatch({
@@ -49,5 +72,14 @@ export const createChat = (userUid1, userUid2) => {
                 chatId: chatId
             }
         })
+    }
+}
+
+export const setActiveChat = (chatId) => {
+    return {
+        type: 'setActiveChat',
+        payload: {
+            chatId: chatId
+        }
     }
 }
