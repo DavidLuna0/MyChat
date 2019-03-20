@@ -9,6 +9,7 @@ export class ConversasList extends Component {
 
 	static navigationOptions = {
 		title: 'Conversas',
+		header: null,
 		tabBarLabel: 'Conversas'
 	}
 

@@ -5,7 +5,6 @@ import { createStackNavigator, createAppContainer} from 'react-navigation';
 import ConversasList from './ConversasList';
 import ConversaInterna from './ConversaInterna';
 
-
 const ConversasNavigator = createStackNavigator({
     ConversasList: {
         screen: ConversasList
@@ -14,6 +13,8 @@ const ConversasNavigator = createStackNavigator({
         screen: ConversaInterna
     }
 });
+
+
 
 const ConversasContainer = createAppContainer(ConversasNavigator);
 

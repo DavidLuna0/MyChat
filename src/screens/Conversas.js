@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { createBottomTabNavigator, createNavigationContainer } from 'react-navigation';
+import { createMaterialTopTabNavigator, createNavigationContainer } from 'react-navigation';
 //import {connect} from 'react-redux';
 
 import ConversasStack from './ConversasStack';
@@ -7,7 +7,7 @@ import ContatoList from './ContatoList';
 import Config from './Config';
 
 
-const ConversasNavigator = createBottomTabNavigator({
+const ConversasNavigator = createMaterialTopTabNavigator({
     ConversasStack: {
         screen: ConversasStack,
         navigationOptions: {
@@ -15,17 +15,31 @@ const ConversasNavigator = createBottomTabNavigator({
         }
     },
     ContatoList: {
-        screen: ContatoList
+        screen: ContatoList,
+        navigationOptions: {
+            tabBarLabel: 'Contatos'
+        }
     },
     Config: {
-        screen: Config
+        screen: Config,
+        navigationOptions: {
+            tabBarLabel: 'Config'
+        }
     }
 }, {
-        defaultNavigationOptions: {
-            animationsEnabled: true,
-            swipeEnabled: true
+    defaultNavigationOptions: {
+        tabBarPosition: 'bottom',
+        animationEnabled: true,
+        tabBarOptions: {
+            showIcon: false,
+            showLabelFalse: true,
+            upperCaseLabel: false,
+            labelStyle: {
+                fontSize: 16
+            }
         }
-    });
+    }
+});
 
 ConversasStack.navigationOptions = ({ navigation }) => {
     let tabBarVisible = true;

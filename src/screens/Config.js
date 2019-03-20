@@ -8,9 +8,7 @@ import {signOut} from '../actions/AuthActions';
 export class Config extends Component {
 
 	static navigationOptions = {
-		title: '',
-        header: null,
-        tabBarLabel: 'Config'
+		header: 'Configurações'
 	}
 
 	constructor(props) {

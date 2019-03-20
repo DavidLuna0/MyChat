@@ -27,7 +27,8 @@ const Navegador = createStackNavigator({
   Conversas: {
     screen: Conversas,
     navigationOptions: {
-      header: null
+      header: null,
+
     }
   },
   SignUp: {

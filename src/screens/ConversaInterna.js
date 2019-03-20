@@ -136,12 +136,12 @@ export class ConversaInterna extends Component {
 
 				<View style={styles.sendArea}>
 					<TouchableHighlight style={styles.imageButton} onPress={this.chooseImage}>
-						<Image style={styles.imageBtnImage} source={require('../assets/images/image_button.png')} />
+						<Image style={styles.imageBtnImage} source={require('../assets/images/insert_photo.png')} />
 					</TouchableHighlight>
 					<TextInput style={styles.sendInput} value={this.state.inputText} onChangeText={(inputText) => this.setState({ inputText })}
 						underlineColorAndroid='black' />
 					<TouchableHighlight style={styles.sendButton} onPress={this.sendMsg}>
-						<Image source={require('../assets/images/sendButton.png')} style={styles.sendImage} />
+						<Image source={require('../assets/images/send_button.png')} style={styles.sendImage} />
 					</TouchableHighlight>
 				</View>
 				<Modal animationType="fade" transparent={false} visible={this.state.modalVisible}>
@@ -157,7 +157,8 @@ export class ConversaInterna extends Component {
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1
+		flex: 1,
+		backgroundColor: '#CCCCCC'
 	},
 	chatArea: {
 		flex: 1,
@@ -166,7 +167,9 @@ const styles = StyleSheet.create({
 	sendArea: {
 		height: 50,
 		backgroundColor: '#EEEEEE',
-		flexDirection: 'row'
+		flexDirection: 'row',
+		borderRadius: 20,
+		margin: 5
 	},
 	sendInput: {
 		height: 50,
@@ -188,19 +191,22 @@ const styles = StyleSheet.create({
 		width: 50,
 		height: 50,
 		justifyContent: 'center',
-		alignItems: 'center'
+		alignItems: 'center',
+		borderRadius: 20
 	},
 	imageBtnImage: {
-		width: 40,
-		height: 40,
+		width: 35,
+		height: 35,
 		marginTop: 5,
-		marginLeft: 5
+		marginLeft: 5,
+		marginBottom: 5
 	},
 	imageTmp: {
 		height: 10
-	}, imageTmpBar: {
+	}, 
+	imageTmpBar: {
 		height: 10,
-		backgroundColor: '#FF0000'
+		backgroundColor: '#cc0000'
 	},
 	modalView: {
 		backgroundColor: '#000000',
