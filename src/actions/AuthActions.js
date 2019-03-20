@@ -35,11 +35,12 @@ export const checkLogin = () => {
 	}
 };
 
-export const signUp = (name, email, password) => {
+export const signUp = (name, email, password, callback) => {
 	return (dispatch) => {
 		firebase.auth().createUserWithEmailAndPassword(email, password)
 			.then((user) => {
 				let uid = firebase.auth().currentUser.uid;
+				callback();
 				firebase.database().ref('users').child(uid).set({
 					name: name
 				});
@@ -66,15 +67,18 @@ export const signUp = (name, email, password) => {
 						alert("Digite uma senha mais segura");
 						break;
 				}
+				callback();
 			})
 	}
 };
 
-export const signIn = (email, password) => {
+export const signIn = (email, password, callback) => {
 	return (dispatch) => {
 		firebase.auth().signInWithEmailAndPassword(email, password)
 			.then((user) => {
 				let uid = firebase.auth().currentUser.uid;
+
+				callback();
 
 				dispatch({
 					type: 'changeUid',
@@ -100,6 +104,7 @@ export const signIn = (email, password) => {
 						break;
 
 				}
+				callback();
 			})
 	};
 };
