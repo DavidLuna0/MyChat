@@ -27,6 +27,7 @@ export class ConversaInterna extends Component {
 
 		this.voltar = this.voltar.bind(this);
 		this.sendMsg = this.sendMsg.bind(this);
+		this.chooseImage = this.chooseImage.bind(this);
 	}
 
 	componentDidMount() {
@@ -59,6 +60,10 @@ export class ConversaInterna extends Component {
 		this.props.sendMessage('text',txt, this.props.uid, this.props.activeChat)
 	}
 
+	chooseImage() {
+		alert('adidiconar imagme')
+	}
+
 	render() {
 
 		let AreaBehavior = Platform.select({ios: 'padding', android: 'null'});
@@ -75,6 +80,9 @@ export class ConversaInterna extends Component {
 					renderItem={({item}) => <MensagemItem data={item} me={this.props.uid} />} 
 				/>
 				<View style={styles.sendArea}>
+				<TouchableHighlight style={styles.imageButton} onPress={this.chooseImage}>
+					<Image style={styles.imageBtnImage} source={require('../assets/images/image_button.png')} />
+				</TouchableHighlight>
 					<TextInput style={styles.sendInput} value={this.state.inputText} onChangeText={(inputText) => this.setState({inputText})}
 							 	underlineColorAndroid='black' />
 					<TouchableHighlight style={styles.sendButton} onPress={this.sendMsg}>
@@ -115,6 +123,18 @@ const styles = StyleSheet.create({
 		height: 40,
 		marginTop: 5,
 		marginRight: 5
+	},
+	imageButton: {
+		width: 50,
+		height: 50,
+		justifyContent: 'center',
+		alignItems: 'center'
+	},
+	imageBtnImage: {
+		width: 40,
+		height: 40,
+		marginTop: 5,
+		marginLeft: 5
 	}
 });
 
