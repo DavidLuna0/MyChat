@@ -97,6 +97,21 @@ export const setActiveChat = (chatId) => {
     }
 }
 
+export const sendImage = (blob, callback) => {
+    return (dispatch) => {
+        let tmpKey = firebase.database().ref('chats').push().key;
+        let fbimage = firebase.storage().ref().child('images').child(tmpKey);
+
+        fbimage.put(blob, {contentType: 'image/jpeg'})
+            .then(() => {
+                callback(tmpKey);
+            })
+            .catch((error) => {
+                alert(error.code)
+            })
+    }
+}
+
 export const sendMessage = (msgType, msgContent, author, activeChat) => {
     return (dispatch) => {
 

@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import { View, KeyboardAvoidingView, Platform, Text, StyleSheet, TextInput, TouchableHighlight, Image, BackHandler, FlatList } from 'react-native';
 import { connect } from 'react-redux';
-import { setActiveChat, sendMessage, monitorChat, monitorChatOff} from '../actions/ChatActions';
+import { setActiveChat, sendMessage, monitorChat, monitorChatOff, sendImage} from '../actions/ChatActions';
+
+import ImagePicker from 'react-native-image-picker';
+import RNFetchBlob from 'react-native-fetch-blob';
+
+window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest;
+window.Blob = RNFetchBlob.polyfill.Blob;
 
 import MensagemItem from '../components/ConversaInterna/MensagemItem'
 
@@ -22,7 +28,8 @@ export class ConversaInterna extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			inputText: ''
+			inputText: '',
+			imageTmp: null
 		};
 
 		this.voltar = this.voltar.bind(this);
@@ -61,7 +68,20 @@ export class ConversaInterna extends Component {
 	}
 
 	chooseImage() {
-		alert('adidiconar imagme')
+		ImagePicker.showImagePicker(null, (r) => {
+			if(r.uri) {
+				let uri = r.uri.replace('file://', '');
+				RNFetchBlob.fs.readFile(uri, 'base64')
+				.then((data) => {
+					return RNFetchBlob.polyfill.Blob.build(data, {type:'image/jpeg;BASE64'});
+				})
+				.then((blob) => {
+					this.props.sendImage(blob, (imgName) => {
+						this.props.sendMessage('image', imgName, this.props.uid, this.props.activeChat);
+					})
+				});
+			}
+		})
 	}
 
 	render() {
@@ -79,6 +99,10 @@ export class ConversaInterna extends Component {
 					data={this.props.activeChatMessages}
 					renderItem={({item}) => <MensagemItem data={item} me={this.props.uid} />} 
 				/>
+				<View style={styles.imageTmp}>
+					<Image source={this.state.imageTmp} style={styles.imgTmpImage} />
+				</View>
+
 				<View style={styles.sendArea}>
 				<TouchableHighlight style={styles.imageButton} onPress={this.chooseImage}>
 					<Image style={styles.imageBtnImage} source={require('../assets/images/image_button.png')} />
@@ -135,6 +159,14 @@ const styles = StyleSheet.create({
 		height: 40,
 		marginTop: 5,
 		marginLeft: 5
+	},
+	imageTmp: {
+		height: 100,
+		backgroundColor: '#DDDDDD'
+	},
+	imageTmpImage: {
+		width: 90,
+		height: 90
 	}
 });
 
@@ -147,7 +179,7 @@ const mapStateToProps = (state) => {
 	};
 };
 
-const ConversaInternaConnect = connect(mapStateToProps, {setActiveChat, sendMessage, monitorChat, monitorChatOff})(ConversaInterna);
+const ConversaInternaConnect = connect(mapStateToProps, {setActiveChat, sendMessage, monitorChat, monitorChatOff, sendImage})(ConversaInterna);
 export default ConversaInternaConnect
 
 
