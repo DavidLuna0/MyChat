@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableHighlight } from 'react-native';
 
 export default class MensagemItem extends Component {
 
@@ -18,6 +18,8 @@ export default class MensagemItem extends Component {
             align: align,
             dateMsg: this.getFormattedDate(this.props.data.date)
         };
+
+        this.imageClicked = this.imageClicked.bind(this);
     }
 
 
@@ -37,6 +39,10 @@ export default class MensagemItem extends Component {
         return newDate;
     }
 
+    imageClicked() {
+        this.props.onImagePress(this.props.data.imgSource);
+    }
+
     render() {
         return (
             <View style={[styles.area, { alignSelf: this.state.align, backgroundColor: this.state.bgColor }]}>
@@ -44,7 +50,9 @@ export default class MensagemItem extends Component {
                     <Text style={{ textAlgin: this.state.align }}>{this.props.data.m}</Text>
                 }
                 {this.props.data.msgType == 'image' &&
-                    <Image style={styles.image} source={{uri:this.props.data.imgSource}} />
+                    <TouchableHighlight onPress={this.imageClicked}>
+                        <Image style={styles.image} source={{uri:this.props.data.imgSource}} />
+                    </TouchableHighlight>
                 }
 
                 <Text style={styles.dateTxt}>{this.state.dateMsg}</Text>

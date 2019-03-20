@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, KeyboardAvoidingView, Platform, Text, StyleSheet, TextInput, TouchableHighlight, Image, BackHandler, FlatList } from 'react-native';
+import { View, KeyboardAvoidingView, Platform, Text, Modal, StyleSheet, TextInput, TouchableHighlight, Image, BackHandler, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import { setActiveChat, sendMessage, monitorChat, monitorChatOff, sendImage } from '../actions/ChatActions';
 
@@ -29,12 +29,16 @@ export class ConversaInterna extends Component {
 		super(props);
 		this.state = {
 			inputText: '',
-			pct: 0
+			pct: 0,
+			modalVisible: false,
+			modalImage: null
 		};
 
 		this.voltar = this.voltar.bind(this);
 		this.sendMsg = this.sendMsg.bind(this);
 		this.chooseImage = this.chooseImage.bind(this);
+		this.setModalVisible = this.setModalVisible.bind(this);
+		this.imagePress = this.imagePress.bind(this);
 	}
 
 	componentDidMount() {
@@ -47,6 +51,20 @@ export class ConversaInterna extends Component {
 
 	componentWillUnmount() {
 		BackHandler.removeEventListener('hardwareBackPress', this.voltar);
+	}
+
+	setModalVisible(status) {
+		let state = this.state;
+		state.modalVisible = status;
+		this.setState(state);
+	}
+
+	imagePress(img) {
+		let state = this.state;
+		state.modalImage = img;
+		this.setState(state);
+
+		this.setModalVisible(true);
 	}
 
 	voltar() {
@@ -108,7 +126,7 @@ export class ConversaInterna extends Component {
 					onLayout={() => { this.chatArea.scrollToEnd({ animated: true }) }}
 					style={styles.chatArea}
 					data={this.props.activeChatMessages}
-					renderItem={({ item }) => <MensagemItem data={item} me={this.props.uid} />}
+					renderItem={({ item }) => <MensagemItem data={item} me={this.props.uid} onImagePress={this.imagePress} />}
 				/>
 				{this.state.pct > 0 &&
 					<View style={styles.imageTmp}>
@@ -126,6 +144,11 @@ export class ConversaInterna extends Component {
 						<Image source={require('../assets/images/sendButton.png')} style={styles.sendImage} />
 					</TouchableHighlight>
 				</View>
+				<Modal animationType="fade" transparent={false} visible={this.state.modalVisible}>
+					<TouchableHighlight style={styles.modalView} onPress={() => {this.setModalVisible(false)}}>
+						<Image resizeMode="contain" style={styles.modalImage} source={{uri: this.state.modalImage}} />
+					</TouchableHighlight>
+				</Modal>
 			</KeyboardAvoidingView>
 		);
 	}
@@ -178,6 +201,19 @@ const styles = StyleSheet.create({
 	}, imageTmpBar: {
 		height: 10,
 		backgroundColor: '#FF0000'
+	},
+	modalView: {
+		backgroundColor: '#000000',
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center'
+	},
+	modalBtn: {
+		color: "#FFFFFF"
+	},
+	modalImage: {
+		width: '100%',
+		height: '100%'
 	}
 });
 
