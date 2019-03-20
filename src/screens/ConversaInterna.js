@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, KeyboardAvoidingView, Platform, Text, StyleSheet, TextInput, TouchableHighlight, Image, BackHandler, FlatList } from 'react-native';
 import { connect } from 'react-redux';
-import { setActiveChat, sendMessage, monitorChat, monitorChatOff, sendImage} from '../actions/ChatActions';
+import { setActiveChat, sendMessage, monitorChat, monitorChatOff, sendImage } from '../actions/ChatActions';
 
 import ImagePicker from 'react-native-image-picker';
 import RNFetchBlob from 'react-native-fetch-blob';
@@ -13,14 +13,14 @@ import MensagemItem from '../components/ConversaInterna/MensagemItem'
 
 export class ConversaInterna extends Component {
 
-	static navigationOptions = ({navigation}) => ({
+	static navigationOptions = ({ navigation }) => ({
 		title: navigation.state.params.title,
 		tabBarVisible: false,
 		headerLeft: (
 			<TouchableHighlight onPress={() => {
 				navigation.state.params.voltarFunction()
 			}} underlayColor={false}>
-				<Image source={require('../../node_modules/react-navigation-stack/src/views/assets/back-icon.png')} style={{width: 25, height: 25, marginLeft: 20}} />
+				<Image source={require('../../node_modules/react-navigation-stack/src/views/assets/back-icon.png')} style={{ width: 25, height: 25, marginLeft: 20 }} />
 			</TouchableHighlight>
 		)
 	});
@@ -29,7 +29,7 @@ export class ConversaInterna extends Component {
 		super(props);
 		this.state = {
 			inputText: '',
-			imageTmp: null
+			pct: 0
 		};
 
 		this.voltar = this.voltar.bind(this);
@@ -38,7 +38,7 @@ export class ConversaInterna extends Component {
 	}
 
 	componentDidMount() {
-		this.props.navigation.setParams({voltarFunction: this.voltar})
+		this.props.navigation.setParams({ voltarFunction: this.voltar })
 		BackHandler.addEventListener('hardwareBackPress', this.voltar);
 
 		this.props.monitorChat(this.props.activeChat);
@@ -64,51 +64,63 @@ export class ConversaInterna extends Component {
 		state.inputText = '';
 		this.setState(state);
 
-		this.props.sendMessage('text',txt, this.props.uid, this.props.activeChat)
+		this.props.sendMessage('text', txt, this.props.uid, this.props.activeChat)
 	}
 
 	chooseImage() {
 		ImagePicker.showImagePicker(null, (r) => {
-			if(r.uri) {
+			if (r.uri) {
 				let uri = r.uri.replace('file://', '');
 				RNFetchBlob.fs.readFile(uri, 'base64')
-				.then((data) => {
-					return RNFetchBlob.polyfill.Blob.build(data, {type:'image/jpeg;BASE64'});
-				})
-				.then((blob) => {
-					this.props.sendImage(blob, (imgName) => {
-						this.props.sendMessage('image', imgName, this.props.uid, this.props.activeChat);
+					.then((data) => {
+						return RNFetchBlob.polyfill.Blob.build(data, { type: 'image/jpeg;BASE64' });
 					})
-				});
+					.then((blob) => {
+						this.props.sendImage(blob,
+
+							(snapshot) => {
+								let pct = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+								let state = this.state;
+								state.pct = pct;
+								this.setState(state);
+							}, (imgName) => {
+								let state = this.state;
+								state.pct = 0;
+								this.setState(state);
+								this.props.sendMessage('image', imgName, this.props.uid, this.props.activeChat);
+							})
+					});
 			}
 		})
 	}
 
 	render() {
 
-		let AreaBehavior = Platform.select({ios: 'padding', android: 'null'});
-		let AreaOffset = Platform.select({ios: '64', android: null});
+		let AreaBehavior = Platform.select({ ios: 'padding', android: 'null' });
+		let AreaOffset = Platform.select({ ios: '64', android: null });
 
 		return (
-			<KeyboardAvoidingView style={styles.container} behavior={AreaBehavior} keyboardVerticalOffset= {AreaOffset}>
-				<FlatList 
-					ref={(ref) => {this.chatArea = ref}}
-					onContentSizeChange={() => {this.chatArea.scrollToEnd({animated: true})}}
-					onLayout={() => {this.chatArea.scrollToEnd({animated:true})}}
+			<KeyboardAvoidingView style={styles.container} behavior={AreaBehavior} keyboardVerticalOffset={AreaOffset}>
+				<FlatList
+					ref={(ref) => { this.chatArea = ref }}
+					onContentSizeChange={() => { this.chatArea.scrollToEnd({ animated: true }) }}
+					onLayout={() => { this.chatArea.scrollToEnd({ animated: true }) }}
 					style={styles.chatArea}
 					data={this.props.activeChatMessages}
-					renderItem={({item}) => <MensagemItem data={item} me={this.props.uid} />} 
+					renderItem={({ item }) => <MensagemItem data={item} me={this.props.uid} />}
 				/>
-				<View style={styles.imageTmp}>
-					<Image source={this.state.imageTmp} style={styles.imgTmpImage} />
-				</View>
+				{this.state.pct > 0 &&
+					<View style={styles.imageTmp}>
+						<View style={[{ width: this.state.pct + '%' }, styles.imageTmpBar]}></View>
+					</View>
+				}
 
 				<View style={styles.sendArea}>
-				<TouchableHighlight style={styles.imageButton} onPress={this.chooseImage}>
-					<Image style={styles.imageBtnImage} source={require('../assets/images/image_button.png')} />
-				</TouchableHighlight>
-					<TextInput style={styles.sendInput} value={this.state.inputText} onChangeText={(inputText) => this.setState({inputText})}
-							 	underlineColorAndroid='black' />
+					<TouchableHighlight style={styles.imageButton} onPress={this.chooseImage}>
+						<Image style={styles.imageBtnImage} source={require('../assets/images/image_button.png')} />
+					</TouchableHighlight>
+					<TextInput style={styles.sendInput} value={this.state.inputText} onChangeText={(inputText) => this.setState({ inputText })}
+						underlineColorAndroid='black' />
 					<TouchableHighlight style={styles.sendButton} onPress={this.sendMsg}>
 						<Image source={require('../assets/images/sendButton.png')} style={styles.sendImage} />
 					</TouchableHighlight>
@@ -161,12 +173,10 @@ const styles = StyleSheet.create({
 		marginLeft: 5
 	},
 	imageTmp: {
-		height: 100,
-		backgroundColor: '#DDDDDD'
-	},
-	imageTmpImage: {
-		width: 90,
-		height: 90
+		height: 10
+	}, imageTmpBar: {
+		height: 10,
+		backgroundColor: '#FF0000'
 	}
 });
 
@@ -179,7 +189,7 @@ const mapStateToProps = (state) => {
 	};
 };
 
-const ConversaInternaConnect = connect(mapStateToProps, {setActiveChat, sendMessage, monitorChat, monitorChatOff, sendImage})(ConversaInterna);
+const ConversaInternaConnect = connect(mapStateToProps, { setActiveChat, sendMessage, monitorChat, monitorChatOff, sendImage })(ConversaInterna);
 export default ConversaInternaConnect
 
 
