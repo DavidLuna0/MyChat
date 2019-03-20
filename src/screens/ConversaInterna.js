@@ -87,6 +87,7 @@ export class ConversaInterna extends Component {
 								let state = this.state;
 								state.pct = 0;
 								this.setState(state);
+								
 								this.props.sendMessage('image', imgName, this.props.uid, this.props.activeChat);
 							})
 					});

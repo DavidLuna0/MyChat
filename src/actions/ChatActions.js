@@ -109,7 +109,9 @@ export const sendImage = (blob,progressCallback, successCallback) => {
                 alert(error.code);
             },
             () => {
-                successCallback(tmpKey);
+                fbimage.getDownloadURL().then((url) =>{
+                    successCallback(url);
+                })
             })
             
     }
