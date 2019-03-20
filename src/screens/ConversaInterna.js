@@ -56,7 +56,7 @@ export class ConversaInterna extends Component {
 		state.inputText = '';
 		this.setState(state);
 
-		this.props.sendMessage(txt, this.props.uid, this.props.activeChat)
+		this.props.sendMessage('text',txt, this.props.uid, this.props.activeChat)
 	}
 
 	render() {

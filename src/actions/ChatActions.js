@@ -97,21 +97,33 @@ export const setActiveChat = (chatId) => {
     }
 }
 
-export const sendMessage = (txt, author, activeChat) => {
+export const sendMessage = (msgType, msgContent, author, activeChat) => {
     return (dispatch) => {
 
         let currentDate = '';
         let cDate = new Date();
 
-        currentDate = cDate.getFullYear() + '-' + (cDate.getMonth() +1) + '-' + cDate.getDate() + ' ' + cDate.getHours() + ':' + cDate.getMinutes() + ':' + cDate.getSeconds()
+        currentDate = cDate.getFullYear() + '-' + (cDate.getMonth() + 1) + '-' + cDate.getDate() + ' ' + cDate.getHours() + ':' + cDate.getMinutes() + ':' + cDate.getSeconds()
 
         let msgId = firebase.database().ref('chats').child(activeChat).child('messages').push();
 
-        msgId.set({
-            date:currentDate,
-            m:txt,
-            uid: author
-        })
+        switch (msgType) {
+            case 'text':
+                msgId.set({
+                    msgType: 'text',
+                    date: currentDate,
+                    m: msgContent,
+                    uid: author
+                });
+                break;
+            case 'image':
+                msgId.set({
+                    msgType: 'image',
+                    date: currentDate,
+                    imgSource: msgContent,
+                    uid: author
+                });
+        }
     }
 }
 
@@ -121,12 +133,27 @@ export const monitorChat = (activeChat) => {
             let arrayMsg = [];
 
             snapshot.forEach((childItem) => {
-                arrayMsg.push({
-                    key: childItem.key,
-                    date: childItem.val().date,
-                    m: childItem.val().m,
-                    uid: childItem.val().uid
-                });
+
+                switch (childItem.val().msgType) {
+                    case 'text':
+                        arrayMsg.push({
+                            key: childItem.key,
+                            date: childItem.val().date,
+                            msgType: 'text',
+                            m: childItem.val().m,
+                            uid: childItem.val().uid
+                        });
+                        break;
+                    case 'image':
+                        arrayMsg.push({
+                            key: childItem.key,
+                            date: childItem.val().date,
+                            msgType: 'image',
+                            imgSource: childItem.val().imgSource,
+                            uid: childItem.val().uid
+                        });
+                        break;
+                }
             });
 
             dispatch({
