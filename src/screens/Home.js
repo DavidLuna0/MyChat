@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text, StyleSheet, TouchableHighlight, Image } from 'react-native';
 import { connect } from 'react-redux';
 import { checkLogin } from '../actions/AuthActions';
 
 export class Home extends Component {
 
 	static navigationOptions = {
-		title:'',
-		header:null
+		title: '',
+		header: null
 	}
 
 	constructor(props) {
@@ -29,10 +29,16 @@ export class Home extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
-				<Text style={styles.h1}>MyChat</Text>
+				<Image source={require('../assets/images/ic_launcher.png')} />
+				<Text style={styles.appName}>MyChat</Text>
+
 				<View style={styles.buttonArea}>
-					<Button onPress={this.signinButton} title="Login" />
-					<Button onPress={this.signupButton} title="Cadastrar" />
+					<TouchableHighlight style={styles.button} onPress={this.signinButton} underlayColor="#FFFFFF">
+						<Text style={styles.btnText}>Entrar</Text>
+					</TouchableHighlight>
+					<TouchableHighlight style={styles.button} onPress={this.signupButton} underlayColor="#FFFFFF">
+						<Text style={styles.btnText}>Cadastrar</Text>
+					</TouchableHighlight>
 				</View>
 			</View>
 		);
@@ -41,26 +47,52 @@ export class Home extends Component {
 }
 
 const styles = StyleSheet.create({
-	container:{
-		margin:10,
+	container: {
+		margin: 10,
 		flex: 1,
 		justifyContent: 'center',
 		alignItems: 'center'
 	},
-	h1: {
+	appName: {
 		fontSize: 30,
-		marginBottom: 50
+		marginTop: 15
+
 	},
 	buttonArea: {
+		marginTop: 120,
 		flexDirection: 'row',
-		width: '100%',
-		justifyContent: 'space-around'
+		justifyContent: 'space-between'
+	},
+	loadingText: {
+		marginBottom: 20,
+		fontSize: 16
+	},
+	button: {
+		width: 120,
+		height: 60,
+		backgroundColor: '#cc0000',
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderRadius: 10,
+		marginLeft: 20,
+		marginRight: 20,
+		shadowColor: 'black',
+		shadowOpacity: 0.8,
+		elevation: 20,
+		shadowRadius: 30,
+		shadowOffset: { width: 56, height: 13 },
+
+	},
+	btnText: {
+		fontSize: 20,
+		fontWeight: 'bold',
+		color: '#FFFFFF'
 	}
 });
 
 const mapStateToProps = (state) => {
 	return {
-		status:state.auth.status
+		status: state.auth.status
 	};
 };
 

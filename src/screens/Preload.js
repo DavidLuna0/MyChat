@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Image, ActivityIndicator } from 'react-native';
 import { NavigationActions, StackActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import { checkLogin } from '../actions/AuthActions';
@@ -50,8 +50,13 @@ export class Preload extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
+				<Image source={require('../assets/images/ic_launcher.png')} />
 				<Text style={styles.appName}>MyChat</Text>
-				<Text>Carregando...</Text>
+
+				<View style={styles.loading}>
+					<Text style={styles.loadingText}>Carregando...</Text>
+					<ActivityIndicator size="large" />
+				</View>
 			</View>
 		);
 	}
@@ -65,7 +70,16 @@ const styles = StyleSheet.create({
 		alignItems: 'center'
 	},
 	appName: {
-		fontSize: 26
+		fontSize: 30,
+		marginTop: 15
+
+	},
+	loading: {
+		marginTop: 150
+	},
+	loadingText: {
+		marginBottom: 20,
+		fontSize: 16
 	}
 });
 
