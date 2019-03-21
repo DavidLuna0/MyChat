@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableHighlight, StyleSheet } from 'react-native';
 
+import { Button } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 export default class ContatoItem extends Component {
 
     constructor(props) {
@@ -15,20 +18,37 @@ export default class ContatoItem extends Component {
 
     render() {
         return (
-            <TouchableHighlight underlayColor="#DDDDDD" style={styles.buttonArea} onPress={this.onClick}>
-                <Text>{this.props.data.name}</Text>
-            </TouchableHighlight>
+
+            <View style={styles.btnArea}>
+                <Button
+                    icon={
+                        <Icon
+                            name="plus"
+                            size={20}
+                            color="#555555"
+
+
+                        />
+                    }
+                    type="outline"
+                    iconRight
+                    title={this.props.data.name}
+                    onPress={this.onClick} />
+            </View>
+
+
+
         )
     }
 }
 
 const styles = StyleSheet.create({
-    buttonArea: {
+    btnArea: {
         height: 40,
         flex: 1,
         justifyContent: 'center',
         paddingLeft: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: '#CCCCCC'
+        margin: 5
+
     }
 })

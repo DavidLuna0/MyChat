@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text, StyleSheet, TouchableHighlight } from 'react-native';
 import {NavigationActions, StackActions } from 'react-navigation';
 import { connect } from 'react-redux';
 
@@ -8,7 +8,7 @@ import {signOut} from '../actions/AuthActions';
 export class Config extends Component {
 
 	static navigationOptions = {
-		header: 'Configurações'
+		title: 'Configurações'
 	}
 
 	constructor(props) {
@@ -34,9 +34,12 @@ export class Config extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
-				<Text>Pagina Config</Text>
 
-                <Button title="Sair" onPress={this.sair} />
+				<View style={styles.btnArea}>
+                        <TouchableHighlight style={styles.button} onPress={this.sair} underlayColor="#FFFFFF">
+                            <Text style={styles.btnText}>Sair</Text>
+                        </TouchableHighlight>
+                    </View>
 			</View>
 		);
 	}
@@ -45,7 +48,33 @@ export class Config extends Component {
 
 const styles = StyleSheet.create({
 	container: {
-		margin: 10
+		margin: 10,
+		flex: 1,
+		alignItems: 'center',
+		justifyContent: 'center'
+	},
+	btnArea: {
+        marginTop: 200
+    },
+    button: {
+        width: 120,
+        height: 60,
+        backgroundColor: '#4388d6',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10,
+        marginLeft: 20,
+        marginRight: 20,
+        shadowColor: 'black',
+        shadowOpacity: 0.8,
+        elevation: 5,
+        shadowRadius: 30,
+        shadowOffset: { width: 56, height: 13 }
+	},
+	btnText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#FFFFFF'
 	}
 });
 

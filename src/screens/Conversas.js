@@ -3,8 +3,8 @@ import { createMaterialTopTabNavigator, createNavigationContainer } from 'react-
 //import {connect} from 'react-redux';
 
 import ConversasStack from './ConversasStack';
-import ContatoList from './ContatoList';
-import Config from './Config';
+import ContatoStack from './ContatoStack';
+import ConfigStack from './ConfigStack';
 
 
 const ConversasNavigator = createMaterialTopTabNavigator({
@@ -14,14 +14,14 @@ const ConversasNavigator = createMaterialTopTabNavigator({
             tabBarLabel: 'Conversas'
         }
     },
-    ContatoList: {
-        screen: ContatoList,
+    ContatoStack: {
+        screen: ContatoStack,
         navigationOptions: {
             tabBarLabel: 'Contatos'
         }
     },
-    Config: {
-        screen: Config,
+    ConfigStack: {
+        screen: ConfigStack,
         navigationOptions: {
             tabBarLabel: 'Config'
         }
@@ -33,9 +33,13 @@ const ConversasNavigator = createMaterialTopTabNavigator({
         tabBarOptions: {
             showIcon: false,
             showLabelFalse: true,
-            upperCaseLabel: false,
+            upperCaseLabel: true,
             labelStyle: {
-                fontSize: 16
+                fontSize: 14,
+                fontWeight: 'bold'
+            },
+            indicatorStyle: {
+                backgroundColor: '#FFFFFF'
             }
         }
     }

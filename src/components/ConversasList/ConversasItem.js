@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableHighlight, StyleSheet } from 'react-native';
 
+import { Button } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 export default class ConversasItem extends Component {
 
     constructor(props) {
@@ -15,20 +18,34 @@ export default class ConversasItem extends Component {
 
     render() {
         return (
-            <TouchableHighlight underlayColor="#DDDDDD" style={styles.buttonArea} onPress={this.onClick}>
-                <Text>{this.props.data.title}</Text>
-            </TouchableHighlight>
+
+            <View style={styles.btnArea}>
+                <Button
+                    icon={
+                        <Icon
+                            name="comment"
+                            size={20}
+                            color="#555555"
+
+
+                        />
+                    }
+                    type="outline"
+                    iconRight
+                    title={this.props.data.title}
+                    onPress={this.onClick} />
+            </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    buttonArea: {
+    btnArea: {
         height: 40,
         flex: 1,
         justifyContent: 'center',
         paddingLeft: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: '#CCCCCC'
+        margin: 5
+
     }
 })
