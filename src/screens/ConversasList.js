@@ -8,7 +8,6 @@ import ConversasItem from '../components/ConversasList/ConversasItem';
 export class ConversasList extends Component {
 
 	static navigationOptions = {
-		title: 'Conversas',
 		tabBarLabel: 'Conversas'
 	}
 

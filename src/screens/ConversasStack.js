@@ -5,9 +5,14 @@ import { createStackNavigator, createAppContainer} from 'react-navigation';
 import ConversasList from './ConversasList';
 import ConversaInterna from './ConversaInterna';
 
+
 const ConversasNavigator = createStackNavigator({
     ConversasList: {
-        screen: ConversasList
+        screen: ConversasList,
+        navigationOptions: {
+            tabBarLabel: null,
+            title: 'Conversas'
+        }
     },
     ConversaInterna: {
         screen: ConversaInterna

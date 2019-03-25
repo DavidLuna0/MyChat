@@ -7,10 +7,6 @@ import {signOut} from '../actions/AuthActions';
 
 export class Config extends Component {
 
-	static navigationOptions = {
-		title: 'Configurações'
-	}
-
 	constructor(props) {
 		super(props);
         this.state = {};

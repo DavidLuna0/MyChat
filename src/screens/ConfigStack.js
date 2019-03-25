@@ -7,7 +7,11 @@ import Config from './Config';
 
 const ConfigNavigator = createStackNavigator({
     Config: {
-        screen: Config
+        screen: Config,
+        navigationOptions: {
+            tabBarLabel: null,
+            title: 'Configurações'
+        }
     }
 });
 

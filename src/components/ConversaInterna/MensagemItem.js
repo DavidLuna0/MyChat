@@ -9,7 +9,7 @@ export default class MensagemItem extends Component {
         let bgColor = '#EEEEEE';
         let align = 'flex-start'
         if (this.props.data.uid == this.props.me) {
-            bgColor = '#9999FF'
+            bgColor = '#4388d6'
             align = 'flex-end'
         }
 
