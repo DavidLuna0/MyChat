@@ -6,6 +6,8 @@ import { setActiveChat, sendMessage, monitorChat, monitorChatOff, sendImage } fr
 import ImagePicker from 'react-native-image-picker';
 import RNFetchBlob from 'react-native-fetch-blob';
 
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest;
 window.Blob = RNFetchBlob.polyfill.Blob;
 
@@ -105,7 +107,7 @@ export class ConversaInterna extends Component {
 								let state = this.state;
 								state.pct = 0;
 								this.setState(state);
-								
+
 								this.props.sendMessage('image', imgName, this.props.uid, this.props.activeChat);
 							})
 					});
@@ -136,17 +138,17 @@ export class ConversaInterna extends Component {
 
 				<View style={styles.sendArea}>
 					<TouchableHighlight style={styles.imageButton} onPress={this.chooseImage}>
-						<Image style={styles.imageBtnImage} source={require('../assets/images/insert_photo.png')} />
+						<Icon name={'camera-image'} color='#555555' size={35} />
 					</TouchableHighlight>
 					<TextInput style={styles.sendInput} value={this.state.inputText} onChangeText={(inputText) => this.setState({ inputText })}
 						underlineColorAndroid='black' />
 					<TouchableHighlight style={styles.sendButton} onPress={this.sendMsg}>
-						<Image source={require('../assets/images/send_button.png')} style={styles.sendImage} />
+						<Icon name={'send'} color='#555555' size={35} />
 					</TouchableHighlight>
 				</View>
 				<Modal animationType="fade" transparent={false} visible={this.state.modalVisible}>
-					<TouchableHighlight style={styles.modalView} onPress={() => {this.setModalVisible(false)}}>
-						<Image resizeMode="contain" style={styles.modalImage} source={{uri: this.state.modalImage}} />
+					<TouchableHighlight style={styles.modalView} onPress={() => { this.setModalVisible(false) }}>
+						<Image resizeMode="contain" style={styles.modalImage} source={{ uri: this.state.modalImage }} />
 					</TouchableHighlight>
 				</Modal>
 			</KeyboardAvoidingView>
@@ -181,12 +183,6 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center'
 	},
-	sendImage: {
-		width: 40,
-		height: 40,
-		marginTop: 5,
-		marginRight: 5
-	},
 	imageButton: {
 		width: 50,
 		height: 50,
@@ -203,10 +199,10 @@ const styles = StyleSheet.create({
 	},
 	imageTmp: {
 		height: 10
-	}, 
+	},
 	imageTmpBar: {
 		height: 10,
-		backgroundColor: '#cc0000'
+		backgroundColor: '#4388d6'
 	},
 	modalView: {
 		backgroundColor: '#000000',

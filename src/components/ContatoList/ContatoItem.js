@@ -21,11 +21,11 @@ export default class ContatoItem extends Component {
         return (
 
             <View style={styles.btnArea}>
-                <TouchableHighlight underlayColor="#DDDDDD" onPress={this.onClick}>
+                <TouchableHighlight style={styles.btn} underlayColor="#F5F5F5" activeOpacity={0.6} onPress={this.onClick}>
                     <View style={styles.btnInt}>
                         <MIcon style={styles.accIcon} name="account-circle" size={50} color="#555555" />
                         <Text style={styles.name}>{this.props.data.name}</Text>
-                        <Icon style={styles.addIcon} name="plus" size={20} color="#555555" />
+                        <Icon style={styles.addIcon} name="plus" size={25} color="#555555" />
                     </View>
 
                 </TouchableHighlight>
@@ -55,15 +55,19 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     accIcon: {
-        marginRight: 60
+        marginRight: 80
     },
     name: {
-        marginRight: 40,
+        marginRight: 100,
         fontSize: 18,
         fontWeight: 'bold',
         marginBottom: 6
     },
     addIcon: {
-        marginLeft: 80
+        marginRight: 26
+    },
+    btn: {
+        width: '100%',
+        height: '100%'
     }
 })

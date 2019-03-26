@@ -33,6 +33,9 @@ export default class MensagemItem extends Component {
 
         if (todayDate != mDate[0]) {
             let newDateDays = mDate[0].split('-');
+            if(newDateDays[1] < 10 ) {
+                newDateDays[1] = '0'+newDateDays[1]
+            }
             newDate = newDateDays[2] + '/' + newDateDays[1] + '/' + newDateDays[0] + ' ' + newDate
         }
 

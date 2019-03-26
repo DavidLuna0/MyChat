@@ -16,6 +16,14 @@ export class Config extends Component {
         this.sair = this.sair.bind(this);
     }
 
+    alterarEmail() {
+
+    }
+
+    alterarSenha() {
+
+    }
+
     sair() {
         this.props.signOut();
 
@@ -34,25 +42,25 @@ export class Config extends Component {
             <View style={styles.container}>
 
                 <View style={styles.btn}>
-                    <TouchableHighlight>
+                    <TouchableHighlight style={styles.click} onPress={this.alterarEmail} underlayColor='#DDDDDD' activeOpacity={0.6}>
                         <View style={styles.btnInt}>
-                            <Icon style={{marginLeft: 5}} name="at" color='#444444' size={25} />
+                            <Icon style={{ marginLeft: 10 }} name="at" color='#444444' size={25} />
                             <Text style={styles.btnsTxt}>Alterar Email</Text>
                         </View>
                     </TouchableHighlight>
                 </View>
 
                 <View style={styles.btn}>
-                    <TouchableHighlight>
+                    <TouchableHighlight style={styles.click} onPress={this.alterarSenha} underlayColor='#DDDDDD' activeOpacity={0.6}>
                         <View style={styles.btnInt}>
-                            <Icon style={{marginLeft: 5}} name="key" color='#444444' size={25} />
+                            <Icon style={{ marginLeft: 10 }} name="key" color='#444444' size={25} />
                             <Text style={styles.btnsTxt}>Alterar Senha</Text>
                         </View>
                     </TouchableHighlight>
                 </View>
 
                 <View style={styles.btnArea}>
-                    <TouchableHighlight style={styles.button} onPress={this.sair} underlayColor="#FFFFFF">
+                    <TouchableHighlight style={styles.button} onPress={this.sair} underlayColor="#F5F5F5" activeOpacity={0.9}>
                         <Text style={styles.btnText}>Sair</Text>
                     </TouchableHighlight>
                 </View>
@@ -96,7 +104,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
         margin: 7,
-        backgroundColor: '#DFDFDF',
+        backgroundColor: '#CCCCCC',
         borderRadius: 6,
         height: 40,
         width: 300
@@ -104,14 +112,18 @@ const styles = StyleSheet.create({
     },
     btnInt: {
         flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
+        alignItems: 'flex-start',
+        justifyContent: 'flex-start',
         marginTop: 7
     },
     btnsTxt: {
         fontWeight: 'bold',
         fontSize: 18,
         marginLeft: 65
+    },
+    click: {
+        width: '100%',
+        height: '100%'
     }
 });
 
