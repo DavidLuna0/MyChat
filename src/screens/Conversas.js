@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { createMaterialTopTabNavigator, createNavigationContainer } from 'react-navigation';
 
 import Icons from 'react-native-vector-icons/MaterialIcons';
+import IconsCom from 'react-native-vector-icons/MaterialCommunityIcons';
 //import {connect} from 'react-redux';
 
 import ConversasStack from './ConversasStack';
@@ -32,7 +33,7 @@ const ConversasNavigator = createMaterialTopTabNavigator({
         screen: ConfigStack,
         navigationOptions: {
             tabBarIcon: () => {
-                return <Icons name={'build'} size={25} color={'black'} />;
+                return <IconsCom name={'settings'} size={25} color={'black'} />;
             }
         }
 
@@ -48,10 +49,11 @@ const ConversasNavigator = createMaterialTopTabNavigator({
                 upperCaseLabel: false,
                 labelStyle: {
                     fontSize: 14,
-                    fontWeight: 'bold'
+                    fontWeight: 'bold',
                 },
                 indicatorStyle: {
-                    backgroundColor: '#000000'
+                    backgroundColor: '#FFFFFF',
+                    height: 4
                 }
             }
         }
