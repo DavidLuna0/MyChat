@@ -83,8 +83,9 @@ export class ConversaInterna extends Component {
 		let state = this.state;
 		state.inputText = '';
 		this.setState(state);
-
-		this.props.sendMessage('text', txt, this.props.uid, this.props.activeChat)
+		if (txt != '') {
+			this.props.sendMessage('text', txt, this.props.uid, this.props.activeChat)
+		}
 	}
 
 	chooseImage() {
@@ -137,12 +138,12 @@ export class ConversaInterna extends Component {
 				}
 
 				<View style={styles.sendArea}>
-					<TouchableHighlight style={styles.imageButton} onPress={this.chooseImage}>
+					<TouchableHighlight underlayColor='#F5F5F5' style={styles.imageButton} onPress={this.chooseImage}>
 						<Icon name={'camera-image'} color='#555555' size={35} />
 					</TouchableHighlight>
 					<TextInput style={styles.sendInput} value={this.state.inputText} onChangeText={(inputText) => this.setState({ inputText })}
 						underlineColorAndroid='black' />
-					<TouchableHighlight style={styles.sendButton} onPress={this.sendMsg}>
+					<TouchableHighlight underlayColor='#F5F5F5' style={styles.sendButton} onPress={this.sendMsg}>
 						<Icon name={'send'} color='#555555' size={35} />
 					</TouchableHighlight>
 				</View>
@@ -171,7 +172,12 @@ const styles = StyleSheet.create({
 		backgroundColor: '#EEEEEE',
 		flexDirection: 'row',
 		borderRadius: 20,
-		margin: 5
+		margin: 5,
+		shadowColor: 'black',
+		shadowOpacity: 0.8,
+		elevation: 5,
+		shadowRadius: 30,
+		shadowOffset: { width: 56, height: 13 }
 	},
 	sendInput: {
 		height: 50,
@@ -181,7 +187,8 @@ const styles = StyleSheet.create({
 		width: 50,
 		height: 50,
 		justifyContent: 'center',
-		alignItems: 'center'
+		alignItems: 'center',
+		borderRadius: 20
 	},
 	imageButton: {
 		width: 50,
